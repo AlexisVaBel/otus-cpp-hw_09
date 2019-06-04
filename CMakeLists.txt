@@ -22,7 +22,7 @@ set(SRC_LIST_TEST ./tests/test_starter.cpp )
 include_directories(${INC_DIRS})
 include_directories(${CONAN_INCLUDE_DIRS})
 
-add_executable(${PROJECT_NAME} ${SRC_LIST})
+add_executable(${PROJECT_NAME} ${SRC_LIST} ${CONAN_INCLUDE_DIRS})
 
 add_executable(${PROJECT_NAME}_test ${SRC_LIST_TEST})
 
