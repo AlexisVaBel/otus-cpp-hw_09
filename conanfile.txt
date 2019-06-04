@@ -1,0 +1,11 @@
+[requires]
+range-v3/0.5.0@ericniebler/stable
+
+
+[imports]
+bin, *.dll -> ./bin
+lib, *.dynlib* -> ./lib
+lib, *.so -> ./lib
+
+[generators]
+cmake
