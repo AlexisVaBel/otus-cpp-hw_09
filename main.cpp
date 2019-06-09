@@ -2,57 +2,42 @@
 #include <algorithm>
 #include <cstdarg>
 #include <iostream>
-#include <array>
 
-#include "commontypes.h"
-#include <range/v3/all.hpp>
 
 #include "io/ip_io.h"
-#include "filter/ip_filter.h"
+#include "rangeflt/ip_filter.h"
 
-// typedef std::vector<std::vector<int> > IntIpVectorsT;
-auto is_one = [](std::vector<int> i) -> bool { return *i.begin() == 1; };
-auto print_each = [] (std::vector<int> vct) {
-    auto itbegin = vct.begin();
-    while(itbegin != vct.end()){
-        std::cout << *itbegin++;
-        if(itbegin != vct.end()) std::cout<<" ";
-    }
-    std::cout << std::endl;
-}
+
+
+
+
 
 int main(int argc , char const *argv[] ){
     try{
         
-        // IntIpVectorsT ip_pool = load_IntIpVectorT_stdin();        
-        // std::sort(ip_pool.begin(), ip_pool.end(), std::greater<IntIpVectorT> () );
-
-        // first is one - means that got two pointers, begining of one and beginning of not one;
-        // auto one_begin = ranges::find(ip_pool,is_one);
-        // auto one_end   = ranges::find_if_not(ip_pool,is_one);
-        // if(one_begin != ranges::end(ip_pool) &&  one_end != ranges::end(ip_pool)){
-        //     std::for_each(one_begin, one_end, print_vct);
-        // }
-        std::vector<int> vct{10,3,4,6,5,7} ;
-        std::vector<int> vct2{1,8,4,6,5,7} ;
-        std::cout << ranges::is_sorted(vct)  << std::endl;
-        std::cout << ranges::is_sorted(vct2) << std::endl;
+//         IntIpVectorsT vct_vct = load_IntIpVectorT_stdin();
+//         std::sort(vct_vct.begin(), vct_vct.end(), std::greater<IntIpVectorT> () );
 
 
+        IntIpVectorsT vct_vct{{1,1,3,4,5},{2,7,65,4},{1,9,65,4},{8,9,65,4},{46,70,65,4},{46,9,70,4}};
 
+        apply_if(vct_vct,first_is_one);
+        apply_if(vct_vct,first46_second70);
+        apply_if(vct_vct,any_is_46_or_70);
 
+        // @brief using ranges::view
+//        auto rng = vct_vct | ranges::view::remove_if(
+//                                 first_is_not_one);
 
-
-        // IntIpVectorsT ip_poolOnes   = get_ip_filter_first(ip_pool,1);
-        // IntIpVectorsT ip_pool46_70  = get_ip_filter_first(ip_pool,46,70);
-        // IntIpVectorsT ip_pool_any46 = get_ip_filter_any(ip_pool,46);
-
-
-
-        // std::for_each(ip_pool.begin(), ip_pool.end(), print_vct);
-        // std::for_each(ip_poolOnes.begin(), ip_poolOnes.end(), print_vct);
-        // std::for_each(ip_pool46_70.begin(), ip_pool46_70.end(), print_vct);
-        // std::for_each(ip_pool_any46.begin(), ip_pool_any46.end(), print_vct);
+//        auto it = rng.begin();
+//        while (it != rng.end()){
+//            ranges::for_each((*it),[](auto t){
+//                std::cout<<(t)<< ".";
+//            });
+//            std::cout<< std::endl;
+//            ++it;
+//        }
+        // @brief using ranges::view
 
     }
     catch(const std::exception &e){

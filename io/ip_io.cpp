@@ -56,10 +56,3 @@ IntIpVectorsT load_IntIpVectorT_stdin(){
 
 
 
-void print_vct(IntIpVectorT vct){
-    for(IntIpVectorT::const_iterator it = vct.cbegin(); it != vct.cend(); ++it){
-        if(it != vct.cbegin()) std::cout << ".";
-        std::cout << *it;
-    }
-    std::cout<< std::endl;
-}

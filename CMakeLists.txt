@@ -15,7 +15,7 @@ conan_basic_setup()
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
 
-set(INC_DIRS "io/" "filter")
+set(INC_DIRS "io/" "rangeflt")
 set(SRC_LIST main.cpp ./io/ip_io.cpp)
 set(SRC_LIST_TEST ./tests/test_starter.cpp )
 

@@ -15,6 +15,5 @@ struct lexicographical_desc_vct{
 
 IntIpVectorsT   load_IntIpVectorT_stdin();
 
-void print_vct(IntIpVectorT vct);
 
 #endif
