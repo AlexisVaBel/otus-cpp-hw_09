@@ -15,19 +15,19 @@ conan_basic_setup()
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
 
-set(INC_DIRS "io/" "rangeflt")
+set(INC_DIRS "io/" ".")
 set(SRC_LIST main.cpp ./io/ip_io.cpp)
 set(SRC_LIST_TEST ./tests/test_starter.cpp )
 
 include_directories(${INC_DIRS})
 include_directories(${CONAN_INCLUDE_DIRS})
 
-add_executable(${PROJECT_NAME} ${SRC_LIST} ${CONAN_INCLUDE_DIRS})
+add_executable(${PROJECT_NAME} ${SRC_LIST} ${CONAN_INCLUDE_DIRS} ${INC_DIRS})
 
 add_executable(${PROJECT_NAME}_test ${SRC_LIST_TEST})
 
 #message("   ")
-#message(${INC_DIRS})
+message(${INC_DIRS})
 
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
