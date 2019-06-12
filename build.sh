@@ -5,4 +5,4 @@ cmake ..
 #CXX=clang++ CC=clang cmake ..
 make -j4
 echo "starting tests"
-./bin/range
+./bin/range_test

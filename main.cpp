@@ -5,39 +5,12 @@
 
 
 #include "io/ip_io.h"
-//#include "ip_filter.h"
+#include "ip_filter.h"
 
 #include <range/v3/all.hpp>
 
-// @brief vector elements printing function
-auto print = [](IntIpVectorT vct) {
-    auto it = vct.begin();
-    while (it != vct.end()) {
-        if(it != vct.cbegin()) std::cout << ".";
-        std::cout << *it++;
-    }
-    std::cout << std::endl;
-};
-
-// @brief apply predicate and if it is true then print
-auto for_each_print = [](IntIpVectorT vct,std::function<bool (IntIpVectorT)> predicate){
-    if(predicate(vct)){
-        print(vct);
-    }
-};
-
-// @brief function for use in main programm
-auto apply_if = [] (IntIpVectorsT vct, std::function<bool(IntIpVectorT)> predicate){
-    auto it = vct.begin();
-    while (it != vct.end()){
-        for_each_print((*it),predicate);
-        ++it;
-    }
-};
-
 
 // @brief functions for filtering elements - predicates for apply_if and for_each_print
-auto all                = [](IntIpVectorT vct) -> bool { return true; };
 auto first_is_one       = [](IntIpVectorT vct) -> bool { return *vct.begin() == 1; };
 auto first46_second70   = [](IntIpVectorT vct) -> bool {
     auto it = vct.begin();
@@ -48,37 +21,44 @@ auto any_is_46_or_70    = [](std::vector<int> vct) -> bool {
 };
 
 //@brief functions for view::remove_if TODO
-auto first_is_not_one   = [](IntIpVectorT vct) -> bool { return *vct.begin() != 1; };
-
-
+auto not_first_is_one   = [](IntIpVectorT vct) -> bool { return *vct.begin() != 1; };
+auto not_first46_second70   = [](IntIpVectorT vct) -> bool {
+    auto it = vct.begin();
+    return *it != 46 && *(++it) != 70;
+};
+void printVector(IntIpVectorsT vct){
+    ranges::for_each(vct,[](IntIpVectorT lclvct){
+        int first[1];
+        first[0] = 0;
+        ranges::for_each(lclvct,[&first](int ival){
+            if(first[0] == 1) std::cout<<".";
+            *first = 1;
+            std::cout<<ival;
+        });
+        std::cout<<std::endl;
+    });
+}
 
 int main(int argc , char const *argv[] ){
     try{
         
-//         IntIpVectorsT vct_vct = load_IntIpVectorT_stdin();
+         IntIpVectorsT vct_vct = load_IntIpVectorT_stdin();
 
-        IntIpVectorsT vct_vct{{1,1,3,4,5},{2,7,65,4},{1,9,65,4},{8,9,65,4},{46,70,65,4},{46,9,70,4}};
+//        IntIpVectorsT vct_vct{{1,1,2,3,4,5},{2,7,65,4},{1,9,65,4},{8,9,65,4},{46,70,65,4},{46,9,70,4}};
         std::sort(vct_vct.begin(), vct_vct.end(), std::greater<IntIpVectorT> () );
-
-
-        apply_if(vct_vct,all);
-        apply_if(vct_vct,first_is_one);
-        apply_if(vct_vct,first46_second70);
-        apply_if(vct_vct,any_is_46_or_70);
-
-        // @brief using ranges::view unused, need to proceed '.' printing on end of the view
-//        auto rng = vct_vct | ranges::view::remove_if(
-//                                 first_is_not_one);
-
-//        auto it = rng.begin();
-//        while (it != rng.end()){
-//            ranges::for_each((*it),[](auto t){
-//                std::cout<<(t)<< ".";
-//            });
-//            std::cout<< std::endl;
-//            ++it;
-//        }
         // @brief using ranges::view
+        auto vct_first_ones = vct_vct | ranges::view::remove_if(
+                                 not_first_is_one);
+        auto vct_first_46_70 = vct_vct | ranges::view::filter(
+                                 first46_second70);
+        auto vct_any_46_70 = vct_vct | ranges::view::filter(
+                                 any_is_46_or_70);
+
+        printVector(vct_vct);
+        printVector(vct_first_ones);
+        printVector(vct_first_46_70);
+        printVector(vct_any_46_70);
+           // @brief using ranges::view
 
     }
     catch(const std::exception &e){
