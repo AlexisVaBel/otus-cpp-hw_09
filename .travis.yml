@@ -11,7 +11,7 @@
          - sudo pip install conan
          - source ~/.profile
  script:
-         - conan install ..
+         - conan install .
          - cmake .
          - cmake --build .
          - cmake --build . --target package
