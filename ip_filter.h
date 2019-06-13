@@ -1,50 +1,41 @@
 #ifndef IP_FILTER_H
 #define IP_FILTER_H
 
-
+#include <iostream>
 #include <range/v3/all.hpp>
 #include "commontypes.h"
 
 //// @brief vector elements printing function
-//auto print = [](IntIpVectorT vct) {
-//    auto it = vct.begin();
-//    while (it != vct.end()) {
-//        if(it != vct.cbegin()) std::cout << ".";
-//        std::cout << *it++;
-//    }
-//    std::cout << std::endl;
-//};
+void printVector(IntIpVectorsT vct){
+    ranges::for_each(vct,[](IntIpVectorT lclvct){
+        int first[1];
+        first[0] = 0;
+        ranges::for_each(lclvct,[&first](int ival){
+            if(first[0] == 1) std::cout<<".";
+            *first = 1;
+            std::cout<<ival;
+        });
+        std::cout<<std::endl;
+    });
+}
 
-//// @brief apply predicate and if it is true then print
-//auto for_each_print = [](IntIpVectorT vct,std::function<bool (IntIpVectorT)> predicate){
-//    if(predicate(vct)){
-//        print(vct);
-//    }
-//};
+auto first_is_one       = [](IntIpVectorT vct) -> bool { return *vct.begin() == 1; };
 
-//// @brief function for use in main programm
-//auto apply_if = [] (IntIpVectorsT vct, std::function<bool(IntIpVectorT)> predicate){
-//    auto it = vct.begin();
-//    while (it != vct.end()){
-//        for_each_print((*it),predicate);
-//        ++it;
-//    }
-//};
+// @brief functions for filtering elements - predicates for apply_if and for_each_print
 
+auto first46_second70   = [](IntIpVectorT vct) -> bool {
+    auto it = vct.begin();
+    return *it == 46 && *(++it) == 70;
+};
+auto any_is_46    = [](std::vector<int> vct) -> bool {
+    return ranges::any_of(vct,[](int i){return i == 46;});
+};
 
-//// @brief functions for filtering elements - predicates for apply_if and for_each_print
-//auto all                = [](IntIpVectorT vct) -> bool { return true; };
-//auto first_is_one       = [](IntIpVectorT vct) -> bool { return *vct.begin() == 1; };
-//auto first46_second70   = [](IntIpVectorT vct) -> bool {
-//    auto it = vct.begin();
-//    return *it == 46 && *(++it) == 70;
-//};
-//auto any_is_46_or_70    = [](std::vector<int> vct) -> bool {
-//    return ranges::any_of(vct,[](int i){return i == 46 || i == 70;});
-//};
-
-////@brief functions for view::remove_if TODO
-//auto first_is_not_one   = [](IntIpVectorT vct) -> bool { return *vct.begin() != 1; };
-
+//@brief functions for view::remove_if TODO
+auto not_first_is_one   = [](IntIpVectorT vct) -> bool { return *vct.begin() != 1; };
+auto not_first46_second70   = [](IntIpVectorT vct) -> bool {
+    auto it = vct.begin();
+    return *it != 46 && *(++it) != 70;
+};
 
 #endif // IP_FILTER_H

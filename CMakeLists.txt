@@ -24,7 +24,7 @@ include_directories(${CONAN_INCLUDE_DIRS})
 
 add_executable(${PROJECT_NAME} ${SRC_LIST} ${CONAN_INCLUDE_DIRS} ${INC_DIRS})
 
-add_executable(${PROJECT_NAME}_test ${SRC_LIST_TEST})
+add_executable(${PROJECT_NAME}_test ${SRC_LIST_TEST} ${INC_DIRS})
 
 #message("   ")
 message(${INC_DIRS})

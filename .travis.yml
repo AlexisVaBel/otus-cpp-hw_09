@@ -5,7 +5,13 @@
          - sudo apt update
          - sudo apt install libspdlog-dev -y
          - sudo apt install libboost-all-dev -y
+         - sudo apt install python
+         - curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+         - python3.4 get-pip.py
+         - pip install conan
+         - source ~/.profile
  script:
+         - conan install ..
          - cmake .
          - cmake --build .
          - cmake --build . --target package
